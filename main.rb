@@ -40,7 +40,7 @@ class Remaining_Cards
         end
       end
     end
-    @cards_left.shuffle
+    @cards_left = @cards_left.shuffle
   end
 
   attr_accessor :cards_left
@@ -67,10 +67,22 @@ class Game
         card_set3 = gets.chomp
         if set?(@active_cards[card_set1.to_i],@active_cards[card_set2.to_i],@active_cards[card_set3.to_i])
           puts "congrats a set has been found!"
+          replace_active_cards(card_set1.to_i,card_set2.to_i,card_set3.to_i,deck)
         else
           puts "This is not a set try again!"
         end
+      elsif set_or_not.downcase == "n"
+        puts "Enter the 3 cards you want replaced"
+        card_set1 = gets.chomp
+        card_set2 = gets.chomp
+        card_set3 = gets.chomp
+        replace_active_cards(card_set1.to_i,card_set2.to_i,card_set3.to_i,deck)
+      elsif set_or_not.downcase == "q"
+        active_game = false
+      else
+        puts "enter a proper value"
       end
+
     end
   end
   def set?(card1,card2,card3)
@@ -96,7 +108,6 @@ class Game
       card = deck.cards_left.pop
       @active_cards << card
     end
-    print_active_cards
   end
   def print_active_cards
     NUMBER_OF_ACTIVE_CARDS.times do |i|
