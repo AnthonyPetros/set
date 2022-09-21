@@ -22,6 +22,29 @@ class Card
     @count
   end
 end
+class Player
+  attr_accessor :name, :num_sets, :num_attempts
+  def initialize(name)
+    @name = name
+    @num_sets = 0
+    @num_attempts = 0
+  end
+  def name
+    @name
+  end
+  def num_sets
+    @num_sets
+  end
+  def num_attempt
+    @num_attempts
+  end
+  def inc_num_sets
+    @num_sets = @num_sets + 1
+  end
+  def inc_num_attempts
+    @num_attempts = @num_attempts +1
+  end
+end
 class Remaining_Cards
   #All Possible Values to fill in all cards as remaining at the beginning
   # of the game.
@@ -49,14 +72,29 @@ class Game
   def initialize
     @active_cards = []
     deck = Remaining_Cards.new
-    NUMBER_OF_ACTIVE_CARDS.times do |i|
+    NUMBER_OF_ACTIVE_CARDS.times do
       card = deck.cards_left.pop
       @active_cards << card
     end
     print_active_cards
     @active_cards = @active_cards.shuffle
     active_game = true
+    valid_players = true
+    players = []
     while active_game
+      while valid_players
+        puts "How many players should be in the game (Select 2-4)"
+        num_players = gets.chomp
+        if num_players.to_i <= 4 && num_players.to_i >=2
+          valid_players = false
+          num_players.to_i.times do|i|
+            puts "Enter a name of a Player"
+            player_name = gets.chomp
+            players << Player.new(player_name)
+            puts"#{player_name} is Player#{i+1}"
+          end
+        end
+      end
       print_active_cards
       puts "Enter s if you found a set otherwise enter n for 3 new cards"
       set_or_not = gets.chomp
