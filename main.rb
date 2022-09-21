@@ -76,27 +76,26 @@ class Game
       card = deck.cards_left.pop
       @active_cards << card
     end
-    print_active_cards
-    @active_cards = @active_cards.shuffle
     active_game = true
     valid_players = true
     players = []
-    while active_game
-      while valid_players
-        puts "How many players should be in the game (Select 2-4)"
-        num_players = gets.chomp
-        if num_players.to_i <= 4 && num_players.to_i >=2
-          valid_players = false
-          num_players.to_i.times do|i|
-            puts "Enter a name of a Player"
-            player_name = gets.chomp
-            players << Player.new(player_name)
-            puts"#{player_name} is Player#{i+1}"
-          end
+    while valid_players
+      puts "How many players should be in the game (Select 2-4)"
+      num_players = gets.chomp
+      if num_players.to_i <= 4 && num_players.to_i >=2
+        valid_players = false
+        num_players.to_i.times do|i|
+          puts "Enter a name of a Player"
+          player_name = gets.chomp
+          players << Player.new(player_name)
+          puts"#{player_name} is Player#{i+1}"
         end
       end
+    end
+    while active_game
+
       print_active_cards
-      puts "Enter s if you found a set otherwise enter n for 3 new cards"
+      puts "Enter s if you found a set otherwise enter n for 3 new cards or q to quit game and display stats"
       set_or_not = gets.chomp
       if set_or_not.downcase == "s"
         puts "Enter the 3 cards for a set as shown next to the card. These should be seperated by new lines."
@@ -105,6 +104,17 @@ class Game
         card_set3 = gets.chomp
         if set?(@active_cards[card_set1.to_i],@active_cards[card_set2.to_i],@active_cards[card_set3.to_i])
           puts "congrats a set has been found!"
+          valid_player_found = false
+          while !valid_player_found
+          puts "Which player# entered the set?"
+          set_finder = gets.chomp
+          if set_finder.to_i >= 1 && set_finder.to_i <= num_players.to_i
+            players[set_finder.to_i - 1].inc_num_sets
+            valid_player_found = true
+          else
+            puts "Enter a valid player"
+          end
+          end
           replace_active_cards(card_set1.to_i,card_set2.to_i,card_set3.to_i,deck)
         else
           puts "This is not a set try again!"
