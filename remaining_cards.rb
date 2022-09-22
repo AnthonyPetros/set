@@ -4,6 +4,7 @@ class Remaining_Cards
   # of the game.
   def initialize
     @cards_left = []
+    #all possible attributes of cards as described by wiki page
     colors = [:red, :green, :purple]
     shapes = [:diamond, :squiggle, :oval]
     shadings = [:solid, :clear, :striped]
