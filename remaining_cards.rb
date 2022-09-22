@@ -16,6 +16,7 @@ class Remaining_Cards
             @cards_left << Card.new(color,shape,shading,count)
           end
         end
+        @cards_left = @cards_left.shuffle
       end
     end
 
