@@ -1,3 +1,4 @@
+AMOUNT_OF_TIME_GIVEN = 30
 require_relative 'player.rb'
 require_relative 'remaining_cards.rb'
 #Game is where all of the game logic resides. It creates a fresh deck of cards and players.
@@ -41,6 +42,13 @@ class Game
         puts "Select a number 2-4."
       end
     end
+    puts "Do you want a timer Y/N"
+    timer = gets.chomp
+    curr_time = 0
+    if(timer.downcase == "y")
+      puts "You have 10 minutes good luck!"
+      curr_time = Time.now()
+    end
     #While the player still wants to play and the board can be added too
     while active_game and deck.cards_left.length > 0
       #Let the user know how many cards are left in the deck
@@ -49,6 +57,10 @@ class Game
       print_active_cards
       puts "Enter s if you found a set otherwise enter n for 3 new cards, h for a hint, or q to quit game and display stats"
       set_or_not = gets.chomp
+      if(curr_time.to_i + AMOUNT_OF_TIME_GIVEN < Time.now.to_i)
+        puts "Time has run out! Please try again!"
+        set_or_not = "q"
+      end
       #have the user select the next action
       if set_or_not.downcase == "s"
         #if they think they have found a set, get the 3 cards
