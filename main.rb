@@ -63,11 +63,12 @@ class Remaining_Cards
         end
       end
     end
-    @cards_left = @cards_left.shuffle
+
   end
 
   attr_accessor :cards_left
 end
+
 class Game
   def initialize
     @active_cards = []
@@ -90,9 +91,11 @@ class Game
           players << Player.new(player_name)
           puts"#{player_name} is Player#{i+1}"
         end
+      else
+        puts "Select a number 2-4."
       end
     end
-    while active_game
+    while active_game and deck.cards_left.length > 0
 
       print_active_cards
       puts "Enter s if you found a set otherwise enter n for 3 new cards or q to quit game and display stats"
@@ -127,6 +130,18 @@ class Game
         replace_active_cards(card_set1.to_i,card_set2.to_i,card_set3.to_i,deck)
       elsif set_or_not.downcase == "q"
         active_game = false
+        greatest = 0
+        player_with_most_sets = ""
+        players.length.times do |i|
+          puts "#{players[i].name} found #{players[i].num_sets} sets"
+          curr_set = players[i].num_sets
+
+          if curr_set > greatest
+            player_with_most_sets = i
+
+          end
+        end
+        puts"#{players[player_with_most_sets].name} had the most sets!"
       else
         puts "enter a proper value"
       end
@@ -134,19 +149,19 @@ class Game
     end
   end
   def set?(card1,card2,card3)
-    if !(((card1.color == card2.color) && (card2.color == card3.color)) || ((card1.color != card2.color) && (card1.color != card3.color) && (card2.color != card3.color)))
+    if !(((card1.color == card2.color) and (card2.color == card3.color)) or ((card1.color != card2.color) and (card1.color != card3.color) and (card2.color != card3.color)))
       return false
     end
-    if !(((card1.shape == card2.shape) && (card2.shape == card3.shape)) || ((card1.shape != card2.shape) && (card1.shape != card3.shape) && (card2.shape != card3.shape)))
+    if !(((card1.shape == card2.shape) and (card2.shape == card3.shape)) or ((card1.shape != card2.shape) and (card1.shape != card3.shape) and (card2.shape != card3.shape)))
       return false
     end
-    if !(((card1.shading == card2.shading) && (card2.shading == card3.shading)) || ((card1.shading != card2.shading) && (card1.shading != card3.shading) && (card2.shading != card3.shading)))
+    if !(((card1.shading == card2.shading) and (card2.shading == card3.shading)) or ((card1.shading != card2.shading) and (card1.shading != card3.shading) and (card2.shading != card3.shading)))
       return false
     end
-    if !(((card1.count == card2.count) && (card2.count == card3.count)) || ((card1.count != card2.count) && (card1.count != card3.count) && (card2.count != card3.count)))
+    if !(((card1.count == card2.count) and (card2.count == card3.count)) or ((card1.count != card2.count) and (card1.count != card3.count) and (card2.count != card3.count)))
       return false
     end
-    return true
+    true
   end
   def replace_active_cards(card1_index,card2_index,card3_index, deck)
     @active_cards.delete_at(card1_index)
