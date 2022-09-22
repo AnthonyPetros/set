@@ -160,6 +160,7 @@ class Game
         NUMBER_OF_ACTIVE_CARDS.times do |k|
           if(set?(@active_cards.at(i),@active_cards.at(j),@active_cards.at(k)) and ( i!=j and j!=k and i!=k))
             puts "There exists a set in the cards on the board"
+            puts "The shape of one card is #{@active_cards.at(i).shape}"
             return
           end
         end
