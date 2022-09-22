@@ -57,30 +57,36 @@ class Game
         card_set2 = gets.chomp
         card_set3 = gets.chomp
         #check if set
-        if set?(@active_cards[card_set1.to_i],@active_cards[card_set2.to_i],@active_cards[card_set3.to_i])
-          puts "congrats a set has been found!"
-          action += 1
-          sets_attempted += 1
-          sets_found +=1
-          valid_player_found = false
-          while !valid_player_found
-            #have the user input a valid user so the set can be tracked
-            puts "Which player# entered the set?"
-            set_finder = gets.chomp
-            #decrement 1 cause player 0 sounds weird
-            if set_finder.to_i >= 1 && set_finder.to_i <= num_players.to_i
-              players[set_finder.to_i - 1].inc_num_sets
-              valid_player_found = true
-            else
-              actions += 1
-              sets_attempted += 1
-              puts "Enter a valid player"
+        if((card_set1.to_i > 0 and card_set1.to_i < NUMBER_OF_ACTIVE_CARDS) and (card_set2.to_i > 0 and card_set2.to_i < NUMBER_OF_ACTIVE_CARDS) and (card_set3.to_i > 0 and card_set3.to_i < NUMBER_OF_ACTIVE_CARDS))
+          if set?(@active_cards[card_set1.to_i],@active_cards[card_set2.to_i],@active_cards[card_set3.to_i])
+            puts "congrats a set has been found!"
+            action += 1
+            sets_attempted += 1
+            sets_found +=1
+            valid_player_found = false
+            while !valid_player_found
+              #have the user input a valid user so the set can be tracked
+              puts "Which player# entered the set?"
+              set_finder = gets.chomp
+              #decrement 1 cause player 0 sounds weird
+              if set_finder.to_i >= 1 && set_finder.to_i <= num_players.to_i
+                players[set_finder.to_i - 1].inc_num_sets
+                valid_player_found = true
+              else
+                actions += 1
+                sets_attempted += 1
+                puts "Enter a valid player"
+              end
             end
+            replace_active_cards(card_set1.to_i,card_set2.to_i,card_set3.to_i,deck)
+          else
+            #if the user entered invalid sets
+            puts "This is not a set try again!"
           end
-          replace_active_cards(card_set1.to_i,card_set2.to_i,card_set3.to_i,deck)
         else
-          #if the user entered invalid sets
-          puts "This is not a set try again!"
+          puts "Enter valid card numbers"
+          sets_attempted += 1
+          actions +=1
         end
         #if the user needs new cards
       elsif set_or_not.downcase == "n"
