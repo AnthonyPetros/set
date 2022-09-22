@@ -1,0 +1,18 @@
+Much of the content in this read me regarding the rules of set are stolen from its wikipedia page.
+The basic game of set consists of finding sets of cards,
+where each attribute on these sets of 3 cards are either all
+the same or all different.
+For example the following form a set.
+    One red striped diamond
+    Two red solid diamonds
+    Three red open diamonds
+The game continues until the board can no longer be populated.
+If there is not set, or a player cannot find one, they can replace
+3 of the cards on the table with 3 new random cards from the deck.
+However, these cards are removed from play and no future sets can be
+created with them.
+The player with the most number of sets when the number of cards runs out,
+or when the users choose to quit the game.
+Instructions to run are simple.
+Navigate to the set file and run the following command.
+    ruby main.rb

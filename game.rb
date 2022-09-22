@@ -94,7 +94,7 @@ class Game
 
           end
         end
-        puts"#{players[player_with_most_sets].name} had the most sets!"
+        puts"#{players[player_with_most_sets.to_i].name} had the most sets!"
       else
         puts "Enter a valid value"
       end
