@@ -5,6 +5,11 @@ require_relative 'remaining_cards.rb'
 # after quitting, or running out of cards to fill a board the game then displays a winner.
 class Game
   def initialize
+    #4 vars for stat keeping purposes
+    sets_found = 0
+    sets_attempted = 0
+    actions = 0
+    resets = 0
     #Get a set of cards to display on the board.
     @active_cards = []
     deck = Remaining_Cards.new
@@ -54,6 +59,9 @@ class Game
         #check if set
         if set?(@active_cards[card_set1.to_i],@active_cards[card_set2.to_i],@active_cards[card_set3.to_i])
           puts "congrats a set has been found!"
+          action += 1
+          sets_attempted += 1
+          sets_found +=1
           valid_player_found = false
           while !valid_player_found
             #have the user input a valid user so the set can be tracked
@@ -64,6 +72,8 @@ class Game
               players[set_finder.to_i - 1].inc_num_sets
               valid_player_found = true
             else
+              actions += 1
+              sets_attempted += 1
               puts "Enter a valid player"
             end
           end
@@ -74,6 +84,7 @@ class Game
         end
         #if the user needs new cards
       elsif set_or_not.downcase == "n"
+        resets +=1
         puts "Enter the 3 cards you want replaced"
         card_set1 = gets.chomp
         card_set2 = gets.chomp
@@ -95,6 +106,7 @@ class Game
           end
         end
         puts"#{players[player_with_most_sets.to_i].name} had the most sets!"
+        Stats.new(sets_found,sets_attempted,resets,actions)
       else
         puts "Enter a valid value"
       end

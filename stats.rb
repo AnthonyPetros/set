@@ -15,5 +15,9 @@ class Stats
       @total_attempts += lines[3].to_i
     end
     File.write("stats.txt","#{@sets_found}\n#{@sets_attempted}\n#{@resets_used}\n#{@total_attempts}")
+    puts "Total Sets Found: #{@sets_found}"
+    puts "Total Sets Attempted: #{@sets_attempted}"
+    puts "Total Resets used: #{@resets_used}"
+    puts "Total actions made: #{@total_attempts}"
   end
 end
