@@ -47,7 +47,7 @@ class Game
       puts "There are #{deck.cards_left.length} cards remaining"
       #display the cards
       print_active_cards
-      puts "Enter s if you found a set otherwise enter n for 3 new cards or q to quit game and display stats"
+      puts "Enter s if you found a set otherwise enter n for 3 new cards, h for a hint, or q to quit game and display stats"
       set_or_not = gets.chomp
       #have the user select the next action
       if set_or_not.downcase == "s"
@@ -113,6 +113,8 @@ class Game
         end
         puts"#{players[player_with_most_sets.to_i].name} had the most sets!"
         Stats.new(sets_found,sets_attempted,resets,actions)
+      elsif set_or_not.downcase == "h"
+        check_for_set
       else
         puts "Enter a valid value"
       end
@@ -151,6 +153,19 @@ class Game
       card = @active_cards.at(i)
       puts "#{i}. color = #{card.color}, shape = #{card.shape}, shading = #{card.shading}, count = #{card.count}"
     end
+  end
+  def check_for_set
+    NUMBER_OF_ACTIVE_CARDS.times do |i|
+      NUMBER_OF_ACTIVE_CARDS.times do |j|
+        NUMBER_OF_ACTIVE_CARDS.times do |k|
+          if(set?(@active_cards.at(i),@active_cards.at(j),@active_cards.at(k)) and ( i!=j and j!=k and i!=k))
+            puts "There exists a set in the cards on the board"
+            return
+          end
+        end
+      end
+    end
+    puts "There is no set on the current board"
   end
 end
 
